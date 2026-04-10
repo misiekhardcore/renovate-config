@@ -1,0 +1,38 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "config:best-practices",
+    ":automergePr",
+    ":automergePatch",
+    ":automergeRequireAllStatusChecks",
+    ":separatePatchReleases",
+    "group:recommended",
+    "group:definitelyTyped",
+  ],
+  rebaseWhen: "conflicted",
+  updateNotScheduled: false,
+  commitMessagePrefix: "deps:",
+  minimumReleaseAge: "3 days",
+  schedule: ["before 4am on Monday"],
+  ignorePaths: [
+    "**/node_modules/**",
+    "**/__tests__/**",
+    "**/tests/**",
+    "**/__fixtures__/**",
+  ],
+  packageRules: [
+    {
+      description: "Automerge all updates with green CI.",
+      matchPackageNames: ["*"],
+      automerge: true,
+    },
+    {
+      description: "Group all patch updates.",
+      matchPackageNames: ["*"],
+      matchUpdateTypes: ["patch"],
+      groupName: "all patch dependencies",
+      groupSlug: "all-patch",
+    },
+  ],
+  platformAutomerge: false,
+}
