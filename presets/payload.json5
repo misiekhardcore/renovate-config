@@ -1,0 +1,26 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
+    {
+      description: "Payload core and every @payloadcms/* plugin must land on one identical exact version - group them and pin.",
+      matchPackageNames: ["payload", "@payloadcms/**"],
+      groupName: "payload cms",
+      groupSlug: "payload",
+      rangeStrategy: "pin",
+      separateMinorPatch: false,
+      separateMajorMinor: true,
+    },
+    {
+      description: "Auth integrations ship paired releases.",
+      matchPackageNames: ["next-auth", "payload-authjs", "@auth/**"],
+      groupName: "auth",
+      groupSlug: "auth",
+    },
+    {
+      description: "AWS SDK packages share a release cadence.",
+      matchPackageNames: ["@aws-sdk/**"],
+      groupName: "aws sdk",
+      groupSlug: "aws-sdk",
+    },
+  ],
+}
