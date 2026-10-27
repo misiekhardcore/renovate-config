@@ -1,0 +1,42 @@
+name: Validate Renovate config
+
+# Reusable: consuming repos call this from a small workflow of their own.
+# Also runs here on changes to the presets themselves.
+on:
+  workflow_call:
+  pull_request:
+    paths:
+      - ".github/workflows/validate-renovate-config.yml"
+      - "**/renovate.json"
+      - "**/renovate.json5"
+      - "*.json5"
+      - "presets/*.json5"
+  push:
+    branches: [main]
+    paths:
+      - "**/renovate.json"
+      - "**/renovate.json5"
+      - "*.json5"
+      - "presets/*.json5"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate Renovate config
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    container:
+      image: ghcr.io/renovatebot/renovate:latest
+      options: --user root
+    steps:
+      - uses: actions/checkout@v6
+      - name: Validate config files and presets
+        run: |
+          renovate-config-validator --strict
+          renovate-config-validator --strict default.json5 presets/*.json5

@@ -1,0 +1,25 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
+    {
+      description: "Dev-only compose services that float on :latest have no meaningful version to track.",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["elestio/minio", "airbyte/mc"],
+      enabled: false,
+    },
+    {
+      description: "Group routine image updates into one PR.",
+      matchDatasources: ["docker"],
+      matchUpdateTypes: ["digest", "patch", "minor"],
+      groupName: "docker images",
+      groupSlug: "docker-images",
+    },
+    {
+      description: "Runtime and database engine majors need a human migration plan.",
+      matchDatasources: ["docker"],
+      matchUpdateTypes: ["major"],
+      automerge: false,
+      addLabels: ["docker", "major"],
+    },
+  ],
+}

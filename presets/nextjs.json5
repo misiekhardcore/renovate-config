@@ -1,0 +1,12 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
+    {
+      description: "Next.js and its ESLint/Sitemap packages are released against one Next version - bump them in a single PR.",
+      matchPackageNames: ["next", "eslint-config-next", "@next/**", "next-sitemap"],
+      groupName: "next.js",
+      groupSlug: "nextjs",
+      separateMajorMinor: true,
+    },
+  ],
+}
