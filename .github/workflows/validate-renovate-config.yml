@@ -36,7 +36,10 @@ jobs:
       options: --user root
     steps:
       - uses: actions/checkout@v6
-      - name: Validate config files and presets
-        run: |
-          renovate-config-validator --strict
-          renovate-config-validator --strict default.json5 presets/*.json5
+      - name: Validate config files
+        run: renovate-config-validator --strict
+
+      # This repo hosts the presets, so validate them explicitly too.
+      - name: Validate presets
+        if: ${{ github.repository == 'misiekhardcore/renovate-config' }}
+        run: renovate-config-validator --strict default.json5 presets/*.json5
