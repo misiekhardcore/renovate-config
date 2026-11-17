@@ -35,7 +35,7 @@ jobs:
       image: ghcr.io/renovatebot/renovate:latest
       options: --user root
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.1.0
       - name: Validate config files
         run: renovate-config-validator --strict
 
